@@ -1,11 +1,8 @@
 <?php
-// ---- DATABASE SETTINGS ----
-// Local (XAMPP) defaults. On InfinityFree, replace with the values from your
-// hosting control panel (MySQL Databases). Never commit real passwords to GitHub.
-$DB_HOST = 'localhost';        // InfinityFree: e.g. sql123.infinityfree.com
-$DB_USER = 'root';             // InfinityFree: e.g. if0_12345678
-$DB_PASS = '';                 // InfinityFree: your vPanel/MySQL password
-$DB_NAME = 'student_db';       // InfinityFree: e.g. if0_12345678_student_db
+$DB_HOST = 'sql110.infinityfree.com';
+$DB_USER = 'if0_43057700';
+$DB_PASS = 'your account password';
+$DB_NAME = 'if0_43057700_students_db';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 try {

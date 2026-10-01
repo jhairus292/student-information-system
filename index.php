@@ -41,15 +41,20 @@ $msg = $messages[$_GET['msg'] ?? ''] ?? '';
 <div class="card table-wrap">
 <table>
   <thead>
-    <tr><th>Student no.</th><th>Name</th><th>Course</th><th>Year</th><th>Email</th><th>Contact</th><th>Birthdate</th><th>Actions</th></tr>
+    <tr><th>Student</th><th>Number</th><th>Course</th><th>Year</th><th>Email</th><th>Contact</th><th>Birthdate</th><th>Actions</th></tr>
   </thead>
   <tbody>
   <?php while ($row = $result->fetch_assoc()): ?>
     <tr>
+      <td>
+        <div class="person">
+          <span class="avatar"><span><?= e(strtoupper(substr($row['first_name'], 0, 1) . substr($row['last_name'], 0, 1))) ?></span></span>
+          <span><strong><?= e($row['first_name']) ?> <?= e($row['last_name']) ?></strong></span>
+        </div>
+      </td>
       <td><?= e($row['student_no']) ?></td>
-      <td><strong><?= e($row['last_name']) ?></strong>, <?= e($row['first_name']) ?></td>
       <td><?= e($row['course']) ?></td>
-      <td><?= (int)$row['year_level'] ?></td>
+      <td><span class="chip">Year <?= (int)$row['year_level'] ?></span></td>
       <td><?= e($row['email']) ?></td>
       <td><?= e($row['contact']) ?></td>
       <td><?= e($row['birthdate']) ?></td>

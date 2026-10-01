@@ -84,3 +84,6 @@ label{display:flex;flex-direction:column;gap:6px;font-weight:500;font-size:.92re
 
 @media(max-width:640px){.grid{grid-template-columns:1fr}.search,.search input{width:100%}h1{font-size:1.6rem}}
 @media(prefers-reduced-motion:reduce){.top::after{animation:none;opacity:0}.btn,tbody tr{transition:none}}
+
+/* keep short values on one line */
+.chip,td:nth-child(2),td:nth-child(7){white-space:nowrap}

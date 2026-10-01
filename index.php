@@ -3,12 +3,20 @@ $pageTitle = 'Students';
 require 'header.php';
 
 $q = trim($_GET['q'] ?? '');
-if ($q !== '') {
+if (preg_match('/^year\s*([1-5])$/i', $q, $m)) {
+    // "year 2" shows only 2nd year students
+    $y = (int)$m[1];
+    $stmt = $conn->prepare("SELECT * FROM students WHERE year_level = ? ORDER BY last_name, first_name");
+    $stmt->bind_param('i', $y);
+    $stmt->execute();
+    $result = $stmt->get_result();
+} elseif ($q !== '') {
     $like = '%' . $q . '%';
     $stmt = $conn->prepare("SELECT * FROM students
         WHERE student_no LIKE ? OR first_name LIKE ? OR last_name LIKE ? OR course LIKE ?
+           OR email LIKE ? OR CONCAT(first_name, ' ', last_name) LIKE ?
         ORDER BY last_name, first_name");
-    $stmt->bind_param('ssss', $like, $like, $like, $like);
+    $stmt->bind_param('ssssss', $like, $like, $like, $like, $like, $like);
     $stmt->execute();
     $result = $stmt->get_result();
 } else {
@@ -25,7 +33,7 @@ $msg = $messages[$_GET['msg'] ?? ''] ?? '';
 <div class="head">
   <h1>Students <span class="count"><?= $result->num_rows ?></span></h1>
   <form method="get" class="search">
-    <input type="search" name="q" value="<?= e($q) ?>" placeholder="Search name, number or course">
+    <input type="search" name="q" value="<?= e($q) ?>" placeholder="Search name, course or year 2">
     <button class="btn" type="submit">Search</button>
   </form>
 </div>

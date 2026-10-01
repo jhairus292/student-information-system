@@ -2,14 +2,16 @@
 $pageTitle = 'Students';
 require 'header.php';
 
-$year = (int)($_GET['year'] ?? 0);
-if ($year >= 1 && $year <= 5) {
-    $stmt = $conn->prepare("SELECT * FROM students WHERE year_level = ? ORDER BY last_name, first_name");
-    $stmt->bind_param('i', $year);
+$q = trim($_GET['q'] ?? '');
+if ($q !== '') {
+    $like = '%' . $q . '%';
+    $stmt = $conn->prepare("SELECT * FROM students
+        WHERE student_no LIKE ? OR first_name LIKE ? OR last_name LIKE ? OR course LIKE ?
+        ORDER BY last_name, first_name");
+    $stmt->bind_param('ssss', $like, $like, $like, $like);
     $stmt->execute();
     $result = $stmt->get_result();
 } else {
-    $year = 0;
     $result = $conn->query("SELECT * FROM students ORDER BY last_name, first_name");
 }
 
@@ -23,12 +25,7 @@ $msg = $messages[$_GET['msg'] ?? ''] ?? '';
 <div class="head">
   <h1>Students <span class="count"><?= $result->num_rows ?></span></h1>
   <form method="get" class="search">
-    <select name="year" aria-label="Year level">
-      <option value="0">All year levels</option>
-      <?php for ($i = 1; $i <= 5; $i++): ?>
-        <option value="<?= $i ?>" <?= $year === $i ? 'selected' : '' ?>>Year <?= $i ?></option>
-      <?php endfor; ?>
-    </select>
+    <input type="search" name="q" value="<?= e($q) ?>" placeholder="Search name, number or course">
     <button class="btn" type="submit">Search</button>
   </form>
 </div>
@@ -37,7 +34,7 @@ $msg = $messages[$_GET['msg'] ?? ''] ?? '';
 
 <?php if ($result->num_rows === 0): ?>
   <div class="card empty">
-    <p><?= $year ? 'No students in Year ' . $year . ' yet.' : 'No student records yet.' ?></p>
+    <p><?= $q !== '' ? 'No students match your search.' : 'No student records yet.' ?></p>
     <a class="btn" href="create.php">Add the first student</a>
   </div>
 <?php else: ?>

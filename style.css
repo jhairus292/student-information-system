@@ -84,13 +84,3 @@ label{display:flex;flex-direction:column;gap:6px;font-weight:500;font-size:.92re
 
 @media(max-width:640px){.grid{grid-template-columns:1fr}.search,.search input{width:100%}h1{font-size:1.6rem}}
 @media(prefers-reduced-motion:reduce){.top::after{animation:none;opacity:0}.btn,tbody tr{transition:none}}
-
-/* keep short values on one line */
-.chip,td:nth-child(2),td:nth-child(7){white-space:nowrap}
-
-/* fit the table on screen: no sideways scrolling on desktop */
-table{min-width:0}
-th,td{padding:13px 10px}
-td:nth-child(5){overflow-wrap:anywhere}
-.search select{width:200px}
-@media(max-width:900px){table{min-width:820px}.search select{width:100%}}

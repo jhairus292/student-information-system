@@ -1,7 +1,7 @@
 <?php
 $DB_HOST = 'sql110.infinityfree.com';
 $DB_USER = 'if0_43057700';
-$DB_PASS = 'your account password';
+$DB_PASS = 'jhairus12345';
 $DB_NAME = 'if0_43057700_students_db';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
